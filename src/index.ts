@@ -1,7 +1,7 @@
 import { app } from './app';
 import mongoose from 'mongoose';
 
-import './config/env';
+import '../env';
 
 const start = async () => {
 	if (!process.env.MONGO_ATLAS_URI) {
