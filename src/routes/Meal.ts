@@ -10,7 +10,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const meal = await Meal.findById(req.params.id);
-		res.send( meal );
+		res.send(meal);
 	} catch (err) {
 		res.status(422).send(err.message);
 	}
@@ -22,7 +22,7 @@ router.get('/byUser/:userId', async (req: Request, res: Response, next: NextFunc
 		const meals = await Meal.find({
 			userId
 		});
-		res.send({ meals });
+		res.send(meals);
 	} catch (err) {
 		res.status(422).send(err.message);
 	}
@@ -38,7 +38,7 @@ router.get(
 				date,
 				userId
 			});
-			res.send({ meals });
+			res.send(meals);
 		} catch (err) {
 			res.status(422).send(err.message);
 		}
@@ -55,7 +55,7 @@ router.post('/new', async (req: Request, res: Response, next: NextFunction) => {
 			...rest
 		});
 
-		res.send({ meal });
+		res.send(meal);
 	} catch (err) {
 		res.status(422).send(err.message);
 	}
@@ -68,6 +68,7 @@ router.post('/update/:id', async (req: Request, res: Response, next: NextFunctio
 			{
 				...req.body
 			},
+			{ new: true },
 			(err, result) => {
 				if (err) res.status(422).send(err.message);
 				else {
