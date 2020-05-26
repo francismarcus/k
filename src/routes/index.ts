@@ -1,7 +1,7 @@
 import Express from 'express';
-import { DailyRouter } from './Daily';
+import { MealRouter } from './Meal';
 
 const router: Express.Router = Express.Router();
-router.use('daily', DailyRouter);
+router.use('/meals', MealRouter);
 
 export const Router = router;
