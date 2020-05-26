@@ -7,6 +7,44 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 	return res.send('Hello from meal router');
 });
 
+router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const meal = await Meal.findById(req.params.id);
+		res.send({ meal });
+	} catch (err) {
+		res.status(422).send(err.message);
+	}
+});
+
+router.get('/byUser/:userId', async (req: Request, res: Response, next: NextFunction) => {
+	const { userId } = req.params;
+	try {
+		const meals = await Meal.find({
+			userId
+		});
+		res.send({ meals });
+	} catch (err) {
+		res.status(422).send(err.message);
+	}
+});
+
+router.get(
+	'/byUserAndDate/:userId/:date',
+	async (req: Request, res: Response, next: NextFunction) => {
+		const { userId, date } = req.params;
+
+		try {
+			const meals = await Meal.find({
+				date,
+				userId
+			});
+			res.send({ meals });
+		} catch (err) {
+			res.status(422).send(err.message);
+		}
+	}
+);
+
 router.post('/new', async (req: Request, res: Response, next: NextFunction) => {
 	const { userId, ...rest } = req.body;
 
@@ -18,20 +56,6 @@ router.post('/new', async (req: Request, res: Response, next: NextFunction) => {
 		});
 
 		res.send({ meal });
-	} catch (err) {
-		res.status(422).send(err.message);
-	}
-});
-
-router.get('/:userId/:date', async (req: Request, res: Response, next: NextFunction) => {
-	const { userId, date } = req.params;
-
-	try {
-		const meals = await Meal.find({
-			date,
-			userId
-		});
-		res.send({ meals });
 	} catch (err) {
 		res.status(422).send(err.message);
 	}
@@ -51,15 +75,6 @@ router.post('/update/:id', async (req: Request, res: Response, next: NextFunctio
 				}
 			}
 		);
-	} catch (err) {
-		res.status(422).send(err.message);
-	}
-});
-
-router.post('/:id', async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const meal = await Meal.findById(req.params.id);
-		res.send({ meal });
 	} catch (err) {
 		res.status(422).send(err.message);
 	}
