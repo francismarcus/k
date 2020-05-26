@@ -10,7 +10,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const meal = await Meal.findById(req.params.id);
-		res.send({ meal });
+		res.send( meal );
 	} catch (err) {
 		res.status(422).send(err.message);
 	}
